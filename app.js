@@ -4,8 +4,8 @@ A simple echo bot for the Microsoft Bot Framework.
 
 var restify = require('restify');
 var builder = require('botbuilder');
-var azure = require('azure-storage');
-var botbuilder_azure = require("botbuilder-azure");
+// var azure = require('azure-storage');
+// var botbuilder_azure = require("botbuilder-azure");
 
 // Setup Restify Server
 var server = restify.createServer();
@@ -19,6 +19,11 @@ var connector = new builder.ChatConnector({
     appPassword: process.env.MicrosoftAppPassword,
     openIdMetadata: process.env.BotOpenIdMetadata
 });
+
+console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppId", process.env.MicrosoftAppId, '!!!!!!!!!!!!!!!!!!!!!!!!');
+console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppPassword", process.env.MicrosoftAppPassword, '!!!!!!!!!!!!!!!!!!!!!!!!');
+console.log("~~~~~~~~~~~~~~~~~~~ BotOpenIdMetadata", process.env.BotOpenIdMetadata, '!!!!!!!!!!!!!!!!!!!!!!!!');
+
 
 // Listen for messages from users
 server.post('/api/messages', connector.listen());
@@ -38,7 +43,6 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
-console.log('I am trying hard!!!!!!!!!!!!!!');
 var address =
 {
     channelId: 'msteams',
