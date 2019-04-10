@@ -38,28 +38,28 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
-// console.log('I am trying hard!!!!!!!!!!!!!!');
-// var address =
-// {
-//     channelId: 'msteams',
-//     user: { id: '29:1KPAAhU_d2-yh6-' },
-//     channelData: {
-//         tenant: {
-//             id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-//         }
-//     },
-//     bot:
-//     {
-//         id: config.get("bot.appId"),
-//         name: 'Test Bot'
-//     },
-//     serviceUrl: 'https://smba.trafficmanager.net/amer/'
-// }
-// console.log('sending**************finished');
+console.log('I am trying hard!!!!!!!!!!!!!!');
+var address =
+{
+    channelId: 'msteams',
+    user: { id: '29:1KPAAhU_d2-yh6-' },
+    channelData: {
+        tenant: {
+            id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+        }
+    },
+    bot:
+    {
+        id: '28:4ee38d37-a8b8-40e8-b41e-a84fe36e6961',
+        name: 'Test Bot'
+    },
+    serviceUrl: 'https://smba.trafficmanager.net/amer/'
+}
+console.log('sending**************finished');
 
-// var msg = new builder.Message().address(address);
-// msg.text('Hello, this is a notification');
-// bot.send(msg);
+var msg = new builder.Message().address(address);
+msg.text('Hello, this is a notification');
+bot.send(msg);
 
 // Intercept trigger event (ActivityTypes.Trigger)
 bot.on('trigger', function (message) {
