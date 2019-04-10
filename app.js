@@ -38,6 +38,24 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
+
+// let newAddress = {
+//     channelId: "msteams",
+//     user: { id: session.message.address.user.id },
+//     channelData: {
+//         tenant: {
+//             id: session.message.sourceEvent.tenant.id,
+//         },
+//     },
+//     bot: {
+//         id: session.message.address.bot.id,
+//         // The bot's name can be used, but is not necessary
+//         // name: session.message.address.bot.name,
+//     },
+//     serviceUrl: msgServiceUrl,
+//     useAuth: true,
+// };
+
 // Intercept trigger event (ActivityTypes.Trigger)
 bot.on('trigger', function (message) {
     console.log('@@@@@@@@ message', message);
@@ -51,7 +69,11 @@ bot.on('trigger', function (message) {
 
 // Handle message from user
 bot.dialog('/', function (session) {
-    console.log('!!!!!!!!!!!! session',session);
+    // console.log('!!!!!!!!!!!! session',session);
+    console.log('!!!!!!!!!!!!!!!!!!!!! address.user.id',session.message.address.user.id, '!!!!!#########');
+    console.log('((((((((())))))))) tenant.id',session.message.sourceEvent.tenant.id, '!!!!!#########');
+    console.log('____________________ address.bot.id',ession.message.address.bot.id, '!!!!!#########');
+    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
     var queuedMessage = { address: session.message.address, text: session.message.text };
     // add message to queue
     session.sendTyping();
