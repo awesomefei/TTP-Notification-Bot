@@ -59,6 +59,7 @@ console.log('sending**************finished');
 
 var msg = new builder.Message().address(address);
 msg.text('Hello, this is a notification');
+msg.summary('This is  a summary')
 bot.send(msg);
 
 // Intercept trigger event (ActivityTypes.Trigger)
