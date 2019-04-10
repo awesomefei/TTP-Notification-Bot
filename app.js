@@ -42,7 +42,7 @@ console.log('I am trying hard!!!!!!!!!!!!!!');
 var address =
 {
     channelId: 'msteams',
-    user: { id: '29:1KPAAhU_d2-yh6-' },
+    user: { id: '29:1KPAAhU_d2-yh6-dDqjKPKyxIquQOvMsrhHQDQ8DlcbAalZCBHILMDXOWMolsP4cFUn0OOegOgEWXQOI2ue7meA' },
     channelData: {
         tenant: {
             id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
