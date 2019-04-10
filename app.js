@@ -64,7 +64,7 @@ var address =
     },
     serviceUrl: 'https://smba.trafficmanager.net/amer/'
 }
-console.log('sending**************finished');
+console.log('sending*********!!!!!*****finished');
 
 var msg = new builder.Message().address(address);
 msg.text('Hello, this is a notification');
