@@ -38,23 +38,29 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
+console.log('I am trying hard!!!!!!!!!!!!!!');
+console.log(config.get("bot.appId"));
+var address =
+{
+    channelId: 'msteams',
+    user: { id: '29:1KPAAhU_d2-yh6-' },
+    channelData: {
+        tenant: {
+            id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+        }
+    },
+    bot:
+    {
+        id: config.get("bot.appId"),
+        name: 'Test Bot'
+    },
+    serviceUrl: 'https://smba.trafficmanager.net/amer/'
+}
+console.log('sending**************finished');
 
-// let newAddress = {
-//     channelId: "msteams",
-//     user: { id: session.message.address.user.id },
-//     channelData: {
-//         tenant: {
-//             id: session.message.sourceEvent.tenant.id,
-//         },
-//     },
-//     bot: {
-//         id: session.message.address.bot.id,
-//         // The bot's name can be used, but is not necessary
-//         // name: session.message.address.bot.name,
-//     },
-//     serviceUrl: msgServiceUrl,
-//     useAuth: true,
-// };
+var msg = new builder.Message().address(address);
+msg.text('Hello, this is a notification');
+bot.send(msg);
 
 // Intercept trigger event (ActivityTypes.Trigger)
 bot.on('trigger', function (message) {
