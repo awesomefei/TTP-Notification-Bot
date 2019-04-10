@@ -38,25 +38,24 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
-console.log('I am trying hard!!!!!!!!!!!!!!');
-console.log(config.get("bot.appId"));
-var address =
-{
-    channelId: 'msteams',
-    user: { id: '29:1KPAAhU_d2-yh6-' },
-    channelData: {
-        tenant: {
-            id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-        }
-    },
-    bot:
-    {
-        id: config.get("bot.appId"),
-        name: 'Test Bot'
-    },
-    serviceUrl: 'https://smba.trafficmanager.net/amer/'
-}
-console.log('sending**************finished');
+// console.log('I am trying hard!!!!!!!!!!!!!!');
+// var address =
+// {
+//     channelId: 'msteams',
+//     user: { id: '29:1KPAAhU_d2-yh6-' },
+//     channelData: {
+//         tenant: {
+//             id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+//         }
+//     },
+//     bot:
+//     {
+//         id: config.get("bot.appId"),
+//         name: 'Test Bot'
+//     },
+//     serviceUrl: 'https://smba.trafficmanager.net/amer/'
+// }
+// console.log('sending**************finished');
 
 var msg = new builder.Message().address(address);
 msg.text('Hello, this is a notification');
