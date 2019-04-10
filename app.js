@@ -57,11 +57,11 @@ var address =
             alert: true
           }
     },
-    bot:
-    {
-        id: '28:4ee38d37-a8b8-40e8-b41e-a84fe36e6961',
-        name: 'Test Bot'
-    },
+    // bot:
+    // {
+    //     id: '28:4ee38d37-a8b8-40e8-b41e-a84fe36e6961',
+    //     name: 'Test Bot'
+    // },
     serviceUrl: 'https://smba.trafficmanager.net/amer/'
 }
 console.log('sending*********!!!!!*****finished');
