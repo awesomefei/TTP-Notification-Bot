@@ -70,10 +70,7 @@ bot.on('trigger', function (message) {
 // Handle message from user
 bot.dialog('/', function (session) {
     // console.log('!!!!!!!!!!!! session',session);
-    console.log('!!!!!!!!!!!!!!!!!!!!! address.user.id',session.message.address.user.id, '!!!!!#########');
-    console.log('((((((((())))))))) tenant.id',session.message.sourceEvent.tenant.id, '!!!!!#########');
-    console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
-    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
+ 
     var queuedMessage = { address: session.message.address, text: session.message.text };
     // add message to queue
     session.sendTyping();
@@ -84,6 +81,10 @@ bot.dialog('/', function (session) {
             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
                 if(!err){
+                    console.log('!!!!!123!!!!!!!!!!!!! address.user.id is ',session.message.address.user.id, '!!!!!#########');
+                    console.log('((((((((())))))))) session.message.sourceEvent.tenant.id is ',session.message.sourceEvent.tenant.id, '!!!!!#########');
+                    console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
                     // Message inserted
                     //session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
                     var address =
