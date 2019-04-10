@@ -57,9 +57,9 @@ bot.set('storage', tableStorage);
 // }
 // console.log('sending**************finished');
 
-var msg = new builder.Message().address(address);
-msg.text('Hello, this is a notification');
-bot.send(msg);
+// var msg = new builder.Message().address(address);
+// msg.text('Hello, this is a notification');
+// bot.send(msg);
 
 // Intercept trigger event (ActivityTypes.Trigger)
 bot.on('trigger', function (message) {
