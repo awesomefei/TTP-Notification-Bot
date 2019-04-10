@@ -8,10 +8,10 @@ var azure = require('azure-storage');
 var botbuilder_azure = require("botbuilder-azure");
 
 // Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url);
-});
+// var server = restify.createServer();
+// server.listen(process.env.port || process.env.PORT || 3978, function () {
+//    console.log('%s listening to %s', server.name, server.url);
+// });
 
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
@@ -26,7 +26,7 @@ console.log("~~~~~~~~~~~~~~~~~~~ BotOpenIdMetadata", process.env.BotOpenIdMetada
 
 
 // Listen for messages from users
-server.post('/api/messages', connector.listen());
+// server.post('/api/messages', connector.listen());
 
 /*----------------------------------------------------------------------------------------
 * Bot Storage: This is a great spot to register the private state storage for your bot.
