@@ -15,8 +15,10 @@ var builder = require('botbuilder');
 
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
-    appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword,
+    appId: "4ee38d37-a8b8-40e8-b41e-a84fe36e6961",
+			appPassword: "(x#Kxz9z[8&Nau:X5L0^7U1bO%^",
+    // appId: process.env.MicrosoftAppId,
+    // appPassword: process.env.MicrosoftAppPassword,
     openIdMetadata: process.env.BotOpenIdMetadata
 });
 
