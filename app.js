@@ -72,7 +72,7 @@ bot.dialog('/', function (session) {
     // console.log('!!!!!!!!!!!! session',session);
     console.log('!!!!!!!!!!!!!!!!!!!!! address.user.id',session.message.address.user.id, '!!!!!#########');
     console.log('((((((((())))))))) tenant.id',session.message.sourceEvent.tenant.id, '!!!!!#########');
-    console.log('____________________ address.bot.id',ession.message.address.bot.id, '!!!!!#########');
+    console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
     var queuedMessage = { address: session.message.address, text: session.message.text };
     // add message to queue
