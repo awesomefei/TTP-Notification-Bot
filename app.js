@@ -40,7 +40,7 @@ bot.set('storage', tableStorage);
 
 // Intercept trigger event (ActivityTypes.Trigger)
 bot.on('trigger', function (message) {
-    console.log('@@@@@@@@', message);
+    console.log('@@@@@@@@ message', message);
     // handle message from trigger function
     var queuedMessage = message.value;
     var reply = new builder.Message()
@@ -51,7 +51,7 @@ bot.on('trigger', function (message) {
 
 // Handle message from user
 bot.dialog('/', function (session) {
-    console.log(session);
+    console.log('!!!!!!!!!!!! session',session);
     var queuedMessage = { address: session.message.address, text: session.message.text };
     // add message to queue
     session.sendTyping();
@@ -63,7 +63,27 @@ bot.dialog('/', function (session) {
             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
                 if(!err){
                     // Message inserted
-                    session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
+                    //session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
+                    var address =
+                        {
+                            channelId: 'msteams',
+                            user: { id: session.message.user.id },
+                            channelData: {
+                                tenant: {
+                                    id: session.message.sourceEvent.tenant.id
+                                }
+                            },
+                            bot:
+                            {
+                                id: config.get("bot.appId"),
+                                name: 'Test Bot'
+                            },
+                            serviceUrl: session.message.address.serviceUrl
+                        }
+
+                        var msg = new builder.Message().address(address);
+                        msg.text('Hello, this is a notification');
+                        bot.send(msg);
                 } else {
                     // this should be a log for the dev, not a message to the user
                     session.send('There was an error inserting your message into queue');

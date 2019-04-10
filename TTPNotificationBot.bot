@@ -1,0 +1,18 @@
+{
+    "name": "TTPNotificationBot",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "https://ttpnotificationbot.azurewebsites.net/api/messages",
+            "id": "aa6c1750-5b2c-11e9-b067-3bea7ce636ae",
+            "name": "https://ttpnotificationbot.azurewebsites.net/api/messages"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "overrides": null,
+    "path": "C:\\Users\\v-lifwan\\Desktop\\Bot\\AzureBot\\TTPNotificationBot.bot"
+}
