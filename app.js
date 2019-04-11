@@ -70,7 +70,7 @@ bot.dialog('/', function (session) {
                     var msg = new builder.Message();
                     msg.text('Hello, this is a notification');
                     msg.summary('This is  a summary');
-                    msg.sourceEvent ({ channelData: { notification: { alert: true } } });
+                    msg.sourceEvent({'*': { 'notification': { 'alert': true } } });
                     // Message inserted
                     session.send(msg);
                 } else {
