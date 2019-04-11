@@ -51,37 +51,37 @@ bot.on('trigger', function (message) {
 });
 
 // Handle message from user
-// bot.dialog('/', function (session) {
-//     console.log('~~~~~~~~~~~~~~~~~~~~~ session ', session);
-//     var queuedMessage = { address: session.message.address, text: session.message.text };
-//     console.log('~~~~~~~~~~~~~~~~~~~~~', queuedMessage);
+bot.dialog('/', function (session) {
+    // console.log('~~~~~~~~~~~~~~~~~~~~~ session ', session);
+    var queuedMessage = { address: session.message.address, text: session.message.text };
+    // console.log('~~~~~~~~~~~~~~~~~~~~~', queuedMessage);
 
-//     // add message to queue
-//     session.sendTyping();
-//     var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
-//     console.log('~~~~~~###############~~~~~~~~~~~~~~~', queueSvc);
+    // add message to queue
+    session.sendTyping();
+    var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
+    // console.log('~~~~~~###############~~~~~~~~~~~~~~~', queueSvc);
 
-//     queueSvc.createQueueIfNotExists(queueName, function(err, result, response){
-//         if(!err){
-//             // Add the message to the queue
-//             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
-//             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
-//                 if(!err){
-//                     var msg = new builder.Message();
-//                     msg.text('Hello, this is a notification');
-//                     msg.summary('This is  a summary');
-//                     msg.sourceEvent ({ notification: {alert: true }});
-//                     // Message inserted
-//                     session.send(msg);
-//                 } else {
-//                     // this should be a log for the dev, not a message to the user
-//                     session.send('There was an error inserting your message into queue');
-//                 }
-//             });
-//         } else {
-//             // this should be a log for the dev, not a message to the user
-//             session.send('There was an error creating your queue');
-//         }
-//     });
+    queueSvc.createQueueIfNotExists(queueName, function(err, result, response){
+        if(!err){
+            // Add the message to the queue
+            var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
+            queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
+                if(!err){
+                    var msg = new builder.Message();
+                    msg.text('Hello, this is a notification');
+                    msg.summary('This is  a summary');
+                    msg.sourceEvent ({ channelData: { notification: { alert: true } } });
+                    // Message inserted
+                    session.send(msg);
+                } else {
+                    // this should be a log for the dev, not a message to the user
+                    session.send('There was an error inserting your message into queue');
+                }
+            });
+        } else {
+            // this should be a log for the dev, not a message to the user
+            session.send('There was an error creating your queue');
+        }
+    });
 
-// });
+});
