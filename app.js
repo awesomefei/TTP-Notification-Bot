@@ -57,11 +57,12 @@ bot.dialog('/', function (session) {
     // add message to queue
     session.sendTyping();
     var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
+    console.log('~~~~~~###############~~~~~~~~~~~~~~~', queueSvc);
+
     queueSvc.createQueueIfNotExists(queueName, function(err, result, response){
         if(!err){
             // Add the message to the queue
             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
-            console.log('~~~~~~###############~~~~~~~~~~~~~~~', queueMessageBuffer);
             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
                 if(!err){
                     // Message inserted
