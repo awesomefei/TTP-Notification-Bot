@@ -61,6 +61,7 @@ bot.dialog('/', function (session) {
         if(!err){
             // Add the message to the queue
             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
+            console.log('~~~~~~###############~~~~~~~~~~~~~~~', queueMessageBuffer);
             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
                 if(!err){
                     // Message inserted
