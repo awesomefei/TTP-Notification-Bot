@@ -39,16 +39,16 @@ var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
 // Intercept trigger event (ActivityTypes.Trigger)
-bot.on('trigger', function (message) {
-    console.log('@@@@@@@@', message);
-    // handle message from trigger function
-    var queuedMessage = message.value;
-    var reply = new builder.Message()
-        .address(queuedMessage.address)
-        .text('This is coming from the trigger111111: ' + queuedMessage.text)
-        .sourceEvent ({ notification: {alert: true }});
-    bot.send(reply);
-});
+// bot.on('trigger', function (message) {
+//     console.log('@@@@@@@@', message);
+//     // handle message from trigger function
+//     var queuedMessage = message.value;
+//     var reply = new builder.Message()
+//         .address(queuedMessage.address)
+//         .text('This is coming from the trigger111111: ' + queuedMessage.text)
+//         .sourceEvent ({ notification: {alert: true }});
+//     bot.send(reply);
+// });
 
 // Handle message from user
 bot.dialog('/', function (session) {
