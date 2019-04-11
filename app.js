@@ -45,7 +45,8 @@ bot.on('trigger', function (message) {
     var queuedMessage = message.value;
     var reply = new builder.Message()
         .address(queuedMessage.address)
-        .text('This is coming from the trigger111111: ' + queuedMessage.text);
+        .text('This is coming from the trigger111111: ' + queuedMessage.text)
+        .sourceEvent ({ notification: {alert: true }});
     bot.send(reply);
 });
 
