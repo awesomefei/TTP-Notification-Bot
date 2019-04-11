@@ -2,34 +2,26 @@
 A simple echo bot for the Microsoft Bot Framework.
 -----------------------------------------------------------------------------*/
 
-// var restify = require('restify');
+var restify = require('restify');
 var builder = require('botbuilder');
-var teams =require('botbuilder-teams');
 var azure = require('azure-storage');
 var botbuilder_azure = require("botbuilder-azure");
 
 // Setup Restify Server
-// var server = restify.createServer();
-// server.listen(process.env.port || process.env.PORT || 3978, function () {
-//    console.log('%s listening to %s', server.name, server.url);
-// });
+var server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+   console.log('%s listening to %s', server.name, server.url);
+});
 
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
-    appId: "4ee38d37-a8b8-40e8-b41e-a84fe36e6961",
-			appPassword: "(x#Kxz9z[8&Nau:X5L0^7U1bO%^",
-    // appId: process.env.MicrosoftAppId,
-    // appPassword: process.env.MicrosoftAppPassword,
+    appId: process.env.MicrosoftAppId,
+    appPassword: process.env.MicrosoftAppPassword,
     openIdMetadata: process.env.BotOpenIdMetadata
 });
 
-// console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppId", process.env.MicrosoftAppId, '!!!!!!!!!!!!!!!!!!!!!!!!');
-// console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppPassword", process.env.MicrosoftAppPassword, '!!!!!!!!!!!!!!!!!!!!!!!!');
-// console.log("~~~~~~~~~~~~~~~~~~~ BotOpenIdMetadata", process.env.BotOpenIdMetadata, '!!!!!!!!!!!!!!!!!!!!!!!!');
-
-
 // Listen for messages from users
-// server.post('/api/messages', connector.listen());
+server.post('/api/messages', connector.listen());
 
 /*----------------------------------------------------------------------------------------
 * Bot Storage: This is a great spot to register the private state storage for your bot.
@@ -44,51 +36,22 @@ var queueName = process.env.BotQueueName || 'bot-queue';
 
 // Create your bot with a function to receive messages from the user
 var bot = new builder.UniversalBot(connector);
-// bot.set('storage', tableStorage);
-
-var address =
-{
-    channelId: 'msteams',
-    user: { id: '29:1KPAAhU_d2-yh6-dDqjKPKyxIquQOvMsrhHQDQ8DlcbAalZCBHILMDXOWMolsP4cFUn0OOegOgEWXQOI2ue7meA' },
-    channelData: {
-        tenant: {
-            id: '72f988bf-86f1-41af-91ab-2d7cd011db47'
-        },
-        notification: {
-            alert: true
-          }
-    },
-    bot:
-    {
-        id: '28:4ee38d37-a8b8-40e8-b41e-a84fe36e6961',
-        name: 'Test Bot'
-    },
-    serviceUrl: 'https://smba.trafficmanager.net/amer/'
-}
-console.log('sending*********!!!!!*****finished');
-
-
-// var msg = new builder.Message().address(address);
-// msg.text('Hello, this is a notification');
-// msg.summary('This is  a summary');
-// msg.sourceEvent ({ notification: { alert: true }});
-// bot.send(msg);
+bot.set('storage', tableStorage);
 
 // Intercept trigger event (ActivityTypes.Trigger)
-// bot.on('trigger', function (message) {
-//     console.log('@@@@@@@@ message', message);
-//     // handle message from trigger function
-//     var queuedMessage = message.value;
-//     var reply = new builder.Message()
-//         .address(queuedMessage.address)
-//         .text('This is coming from the trigger111111: ' + queuedMessage.text);
-//     bot.send(reply);
-// });
+bot.on('trigger', function (message) {
+    console.log('@@@@@@@@', message);
+    // handle message from trigger function
+    var queuedMessage = message.value;
+    var reply = new builder.Message()
+        .address(queuedMessage.address)
+        .text('This is coming from the trigger111111: ' + queuedMessage.text);
+    bot.send(reply);
+});
 
 // Handle message from user
 bot.dialog('/', function (session) {
-    // console.log('!!!!!!!!!!!! session',session);
- 
+    console.log(session);
     var queuedMessage = { address: session.message.address, text: session.message.text };
     // add message to queue
     session.sendTyping();
@@ -99,13 +62,8 @@ bot.dialog('/', function (session) {
             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
                 if(!err){
-                    console.log('!!!!!123!!!!!!!!!!!!! address.user.id is ',session.message.address.user.id, '!!!!!#########');
-                    console.log('((((((((())))))))) session.message.sourceEvent.tenant.id is ',session.message.sourceEvent.tenant.id, '!!!!!#########');
-                    console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
-                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
                     // Message inserted
                     session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
-                
                 } else {
                     // this should be a log for the dev, not a message to the user
                     session.send('There was an error inserting your message into queue');
@@ -118,19 +76,3 @@ bot.dialog('/', function (session) {
     });
 
 });
-
-bot.dialog('/', function (session) {
-    console.log('!!!!!!!!!!!! session',session);
-    // user name/user id
-    var msg = new teams.TeamsMessage(session).text("This is a test notification message.");
-    // This is a dictionary which could be merged with other properties
-    var alertFlag = teams.TeamsMessage.alertFlag;
-    var notification = (msg).sourceEvent({
-      '*' : alertFlag
-    });
-  
-    // this should trigger an alert
-    session.send(notification);
-    session.endDialog();
-  });
-  
