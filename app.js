@@ -51,8 +51,9 @@ bot.on('trigger', function (message) {
 
 // Handle message from user
 bot.dialog('/', function (session) {
-    console.log(session);
     var queuedMessage = { address: session.message.address, text: session.message.text };
+    console.log('~~~~~~~~~~~~~~~~~~~~~', queuedMessage);
+
     // add message to queue
     session.sendTyping();
     var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
