@@ -52,6 +52,7 @@ bot.on('trigger', function (message) {
 
 // Handle message from user
 bot.dialog('/', function (session) {
+    console.log('~~~~~~~~~~~~~~~~~~~~~ session ', session);
     var queuedMessage = { address: session.message.address, text: session.message.text };
     console.log('~~~~~~~~~~~~~~~~~~~~~', queuedMessage);
 
