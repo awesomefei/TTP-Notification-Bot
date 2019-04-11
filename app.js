@@ -23,9 +23,9 @@ var connector = new builder.ChatConnector({
     openIdMetadata: process.env.BotOpenIdMetadata
 });
 
-console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppId", process.env.MicrosoftAppId, '!!!!!!!!!!!!!!!!!!!!!!!!');
-console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppPassword", process.env.MicrosoftAppPassword, '!!!!!!!!!!!!!!!!!!!!!!!!');
-console.log("~~~~~~~~~~~~~~~~~~~ BotOpenIdMetadata", process.env.BotOpenIdMetadata, '!!!!!!!!!!!!!!!!!!!!!!!!');
+// console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppId", process.env.MicrosoftAppId, '!!!!!!!!!!!!!!!!!!!!!!!!');
+// console.log("~~~~~~~~~~~~~~~~~~~ MicrosoftAppPassword", process.env.MicrosoftAppPassword, '!!!!!!!!!!!!!!!!!!!!!!!!');
+// console.log("~~~~~~~~~~~~~~~~~~~ BotOpenIdMetadata", process.env.BotOpenIdMetadata, '!!!!!!!!!!!!!!!!!!!!!!!!');
 
 
 // Listen for messages from users
@@ -66,61 +66,8 @@ var address =
     serviceUrl: 'https://smba.trafficmanager.net/amer/'
 }
 console.log('sending*********!!!!!*****finished');
-bot.dialog('/', [
-    function (session) {
-        builder.Prompts.choice(session, "Choose an option:", 'Fetch channel list|Mention user|Start new 1 on 1 chat|Route message to general channel|FetchMemberList|Send O365 actionable connector card|FetchTeamInfo(at Bot in team)|Start New Reply Chain (in channel)|Issue a Signin card to sign in a Facebook app|Logout Facebook app and clear cached credentials|MentionChannel|MentionTeam|NotificationFeed|Bot Delete Message');
-    },
-    function (session, results) {
-        switch (results.response.index) {
-            case 0:
-                session.beginDialog('FetchChannelList');
-                break;
-            case 1:
-                session.beginDialog('MentionUser');
-                break;
-            case 2:
-                session.beginDialog('StartNew1on1Chat');
-                break;
-            case 3:
-                session.beginDialog('RouteMessageToGeneral');
-                break;
-            case 4:
-                session.beginDialog('FetchMemberList');
-                break;
-            case 5:
-                session.beginDialog('SendO365Card');
-                break;
-            case 6:
-                session.beginDialog('FetchTeamInfo');
-                break;
-            case 7:
-                session.beginDialog('StartNewReplyChain');
-                break;
-            case 8:
-                session.beginDialog('Signin');
-                break;
-            case 9:
-                session.beginDialog('Signout');
-                break;
-            case 10:
-                session.beginDialog('MentionChannel');
-                break;
-            case 11:
-                session.beginDialog('MentionTeam');
-                break;
-            case 12:
-                session.beginDialog('NotificationFeed');
-                break;
-            case 13:
-                session.beginDialog('BotDeleteMessage');
-                break;
-            default:
-                session.endDialog();
-                break;
-        }
-    }
-]);
-bot.dialog('NotificationFeed', function (session) {
+
+bot.dialog('/', function (session) {
     // user name/user id
     var msg = new teams.TeamsMessage(session).text("This is a test notification message.");
     // This is a dictionary which could be merged with other properties
