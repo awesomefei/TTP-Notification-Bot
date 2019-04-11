@@ -10,10 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "azure-storage": "^2.4.0",
     "botbuilder": "^3.13.1",
     "botbuilder-azure": "^3.0.4",
-    "restify": "^5.0.0",
-    "azure-storage": "^2.4.0"
+    "botbuilder-teams": "^0.2.6",
+    "restify": "^5.0.0"
   },
   "devDependencies": {
     "request": "^2.81.0",
