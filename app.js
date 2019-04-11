@@ -5,8 +5,8 @@ A simple echo bot for the Microsoft Bot Framework.
 // var restify = require('restify');
 var builder = require('botbuilder');
 var teams =require('botbuilder-teams');
-// var azure = require('azure-storage');
-// var botbuilder_azure = require("botbuilder-azure");
+var azure = require('azure-storage');
+var botbuilder_azure = require("botbuilder-azure");
 
 // Setup Restify Server
 // var server = restify.createServer();
@@ -37,10 +37,10 @@ var connector = new builder.ChatConnector({
 * For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
 * ---------------------------------------------------------------------------------------- */
 
-// var tableName = 'botdata';
-// var azureTableClient = new botbuilder_azure.AzureTableClient(tableName, process.env['AzureWebJobsStorage']);
-// var tableStorage = new botbuilder_azure.AzureBotStorage({ gzipData: false }, azureTableClient);
-// var queueName = process.env.BotQueueName || 'bot-queue';
+var tableName = 'botdata';
+var azureTableClient = new botbuilder_azure.AzureTableClient(tableName, process.env['AzureWebJobsStorage']);
+var tableStorage = new botbuilder_azure.AzureBotStorage({ gzipData: false }, azureTableClient);
+var queueName = process.env.BotQueueName || 'bot-queue';
 
 // Create your bot with a function to receive messages from the user
 var bot = new builder.UniversalBot(connector);
@@ -67,21 +67,7 @@ var address =
 }
 console.log('sending*********!!!!!*****finished');
 
-bot.dialog('/', function (session) {
-    console.log('!!!!!!!!!!!! session',session);
-    // user name/user id
-    var msg = new teams.TeamsMessage(session).text("This is a test notification message.");
-    // This is a dictionary which could be merged with other properties
-    var alertFlag = teams.TeamsMessage.alertFlag;
-    var notification = (msg).sourceEvent({
-      '*' : alertFlag
-    });
-  
-    // this should trigger an alert
-    session.send(notification);
-    session.endDialog();
-  });
-  
+
 // var msg = new builder.Message().address(address);
 // msg.text('Hello, this is a notification');
 // msg.summary('This is  a summary');
@@ -100,35 +86,51 @@ bot.dialog('/', function (session) {
 // });
 
 // Handle message from user
-// bot.dialog('/', function (session) {
-//     // console.log('!!!!!!!!!!!! session',session);
+bot.dialog('/', function (session) {
+    // console.log('!!!!!!!!!!!! session',session);
  
-//     var queuedMessage = { address: session.message.address, text: session.message.text };
-//     // add message to queue
-//     session.sendTyping();
-//     var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
-//     queueSvc.createQueueIfNotExists(queueName, function(err, result, response){
-//         if(!err){
-//             // Add the message to the queue
-//             var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
-//             queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
-//                 if(!err){
-//                     console.log('!!!!!123!!!!!!!!!!!!! address.user.id is ',session.message.address.user.id, '!!!!!#########');
-//                     console.log('((((((((())))))))) session.message.sourceEvent.tenant.id is ',session.message.sourceEvent.tenant.id, '!!!!!#########');
-//                     console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
-//                     console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
-//                     // Message inserted
-//                     session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
+    var queuedMessage = { address: session.message.address, text: session.message.text };
+    // add message to queue
+    session.sendTyping();
+    var queueSvc = azure.createQueueService(process.env.AzureWebJobsStorage);
+    queueSvc.createQueueIfNotExists(queueName, function(err, result, response){
+        if(!err){
+            // Add the message to the queue
+            var queueMessageBuffer = new Buffer(JSON.stringify(queuedMessage)).toString('base64');
+            queueSvc.createMessage(queueName, queueMessageBuffer, function(err, result, response){
+                if(!err){
+                    console.log('!!!!!123!!!!!!!!!!!!! address.user.id is ',session.message.address.user.id, '!!!!!#########');
+                    console.log('((((((((())))))))) session.message.sourceEvent.tenant.id is ',session.message.sourceEvent.tenant.id, '!!!!!#########');
+                    console.log('____________________ address.bot.id',session.message.address.bot.id, '!!!!!#########');
+                    console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~address.serviceUr',session.message.address.serviceUrl, '!!!!!#########');
+                    // Message inserted
+                    session.send('Your message (\'' + session.message.text + '\') aaaaa has been added to a queue, and it will be sent back to you via a Function');
                 
-//                 } else {
-//                     // this should be a log for the dev, not a message to the user
-//                     session.send('There was an error inserting your message into queue');
-//                 }
-//             });
-//         } else {
-//             // this should be a log for the dev, not a message to the user
-//             session.send('There was an error creating your queue');
-//         }
-//     });
+                } else {
+                    // this should be a log for the dev, not a message to the user
+                    session.send('There was an error inserting your message into queue');
+                }
+            });
+        } else {
+            // this should be a log for the dev, not a message to the user
+            session.send('There was an error creating your queue');
+        }
+    });
 
-// });
+});
+
+bot.dialog('/', function (session) {
+    console.log('!!!!!!!!!!!! session',session);
+    // user name/user id
+    var msg = new teams.TeamsMessage(session).text("This is a test notification message.");
+    // This is a dictionary which could be merged with other properties
+    var alertFlag = teams.TeamsMessage.alertFlag;
+    var notification = (msg).sourceEvent({
+      '*' : alertFlag
+    });
+  
+    // this should trigger an alert
+    session.send(notification);
+    session.endDialog();
+  });
+  
