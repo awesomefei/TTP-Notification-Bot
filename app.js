@@ -69,7 +69,7 @@ console.log('sending*********!!!!!*****finished');
 var msg = new builder.Message().address(address);
 msg.text('Hello, this is a notification');
 msg.summary('This is  a summary');
-msg.setChannelData ({ notification: {alert: true }});
+msg.sourceEvent ({ notification: {alert: true }});
 bot.send(msg);
 
 // Intercept trigger event (ActivityTypes.Trigger)
