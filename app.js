@@ -39,7 +39,7 @@ var bot = new builder.UniversalBot(connector);
 bot.set('storage', tableStorage);
 
 // Intercept trigger event (ActivityTypes.Trigger)
-bot.on('hi', function (message) {
+bot.on('trigger', function (message) {
     console.log('@@@@@@@@', message);
     // handle message from trigger function
     var queuedMessage = message.value;
